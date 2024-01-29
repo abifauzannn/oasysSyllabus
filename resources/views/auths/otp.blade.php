@@ -23,7 +23,7 @@
         <img src="{{ URL('images/Steps.png') }}" alt="" class="w-[206px] h-[84px]">
         <div class="w-[380px] sm:w-[412px] h-[358px] flex items-center justify-center flex-col mt-20 sm:mt-[88px]">
             <img src="{{ URL('images/envelope.svg') }}" alt="">
-            <div class="text-gray-900 text-4xl font-bold font-['Inter'] leading-[48px] mt-4 mb-4">OTP Email</div>
+            <div class="text-gray-900 text-4xl font-['Inter'] font-bold mt-4 mb-4">OTP Email</div>
             <div class="text-center text-gray-900 text-base font-medium font-['Inter'] leading-normal mb-12">Silakan
                 cek kode OTP pada inbox email anda untuk </div>
             <form>

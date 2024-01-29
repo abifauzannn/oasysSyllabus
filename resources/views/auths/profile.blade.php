@@ -18,7 +18,7 @@
 
      <div class="container mx-auto flex items-center justify-center flex-col mt-10">
         <img src="{{ URL('images/Steps1.png') }}" alt="" class="w-[206px] h-[84px]">
-        <div class="w-[380px] sm:w-[412px] h-[358px] flex items-center justify-center flex-col mt-24 sm:mt-[100px]">
+        <div class="w-[360px] sm:w-[412px] h-[358px] flex items-center justify-center flex-col mt-24 sm:mt-[100px]">
             <img src="{{ URL('images/user.svg') }}" alt="" class="">
             <div class="text-gray-900 text-4xl font-bold font-['Inter'] leading-[48px] mt-4 mb-4 sm">Lengkapi Profile</div>
             <div class="text-center text-gray-900 text-base font-medium font-['Inter'] leading-normal mb-12">Silakan

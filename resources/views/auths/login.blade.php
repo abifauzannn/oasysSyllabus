@@ -26,7 +26,7 @@
         <div class="w-[340px] sm:w-[352px] h-[515px] flex flex-col">
             <div class="justify-center items-center gap-4 inline-flex mb-12">
                 <img src="{{ URL('images/Logo.svg') }}" alt="" class="w-[50px] h-[39px]">
-                <div class="text-center text-gray-900 text-2xl font-bold font-['Inter'] leading-normal">Oasys Syllabus
+                <div class="text-center text-gray-900 text-2xl font-bold font-['Inter'] leading-normal">Brainys
                 </div>
             </div>
             <div>

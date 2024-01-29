@@ -50,7 +50,8 @@
                     </div>
                     <img src="{{ URL('images/Avatar.png') }}" alt="">
                     <div x-data="{ open: false }" x-ref="dropdown">
-                        <img src="{{ URL('images/dropdown.svg') }}" alt="" @click="open = !open"  class="cursor-pointer">
+                        <img src="{{ URL('images/dropdown.svg') }}" alt="" @click="open = !open"
+                            class="cursor-pointer">
                         <div x-show="open" x-cloak
                             class="absolute right-3 mt-[30px] border bg-white divide-y divide-gray-100 rounded-lg shadow p-3"
                             x-transition:enter="transition ease-out duration-300"
