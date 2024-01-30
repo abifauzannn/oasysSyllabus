@@ -45,8 +45,7 @@
                     </div>
 
                     <div class="flex-col items-start hidden md:block">
-                        <div class="text-gray-900 text-base font-medium  font-['Inter']">{{ $userData['name'] }}</div>
-                        <div class="text-gray-500 text-sm font-normal  font-['Inter']">{{ $userData['email'] }}</div>
+
                     </div>
                     <img src="{{ URL('images/Avatar.png') }}" alt="">
                     <div x-data="{ open: false }" x-ref="dropdown">
@@ -60,13 +59,7 @@
                             x-transition:leave-start="opacity-100 scale-100"
                             x-transition:leave-end="opacity-0 scale-90">
                             <div class="md:hidden">
-                                <div class="text-gray-900 text-base font-medium leading-normal font-['Inter']">
-                                    {{ $userData['name'] }}
 
-                                </div>
-                                <div class="text-gray-500 text-sm font-normal leading-snug font-['Inter'] mb-1">
-                                    {{ $userData['email'] }}
-                                </div>
                             </div>
                             <ul class="py-2">
                                 <li>

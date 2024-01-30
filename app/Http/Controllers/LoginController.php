@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 use Laravel\Socialite\Facades\Socialite;
 
 
@@ -78,18 +79,56 @@ public function logout()
 
 public function redirectToGoogle()
 {
-    return Socialite::driver('google')->redirect();
+    // Mengarahkan pengguna langsung ke URL pilihan akun Google
+    return redirect('https://be.brainys.oasys.id/api/login/google/');
 }
 
-public function handleGoogleCallback()
+public function handleGoogleCallback(Request $request)
 {
-    $user = Socialite::driver('google')->user();
-    // Tambahkan logika untuk menyimpan atau mengautentikasi pengguna
-    // Contoh: $user->getEmail(), $user->getName()
-    // Autentikasi pengguna jika diperlukan
-    Auth::login($user);
-    return redirect('/home'); // Ganti dengan halaman yang sesuai
+    try {
+        // Mendapatkan informasi pengguna dari respons Google
+        $response = json_decode($request->getContent(), true);
+
+        // Pastikan respons memiliki informasi yang diperlukan
+        if (isset($response['id'], $response['email'], $response['token'])) {
+            // Cari atau buat pengguna baru berdasarkan email dari Google
+            $existingUser = User::where('email', $response['email'])->first();
+
+            if ($existingUser) {
+                // Jika pengguna sudah ada, login pengguna
+                Auth::login($existingUser);
+            } else {
+                // Jika pengguna belum ada, buat pengguna baru
+                $newUser = new User();
+                $newUser->name = $response['name'] ?? null;
+                $newUser->email = $response['email'];
+                // Atur properti lain yang ingin Anda ambil dari respons Google
+                $newUser->save();
+
+                // Login pengguna baru
+                Auth::login($newUser);
+            }
+
+            // Redirect pengguna ke halaman dashboard setelah login berhasil
+            return redirect()->route('dashboard');
+        }
+    } catch (\Exception $e) {
+        return redirect('/login')->with('error', 'Terjadi kesalahan saat login menggunakan Google.');
+    }
+
+    return redirect('/login')->with('error', 'Data respons tidak valid.');
 }
+
+public function showDashboard()
+{
+    // Mendapatkan data pengguna yang telah login
+    $userData = Auth::user();
+
+    // Tampilkan data di halaman dashboard
+    return view('dashboard', compact('userData'));
+}
+
+
 }
 
 

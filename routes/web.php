@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\GoogleLoginController;
@@ -16,6 +17,8 @@ use Illuminate\Auth\Events\Login;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
 Route::get('/', function () {
     return view('auths.login');
@@ -41,11 +44,6 @@ Route::get('/syllabus', function () {
     return view('syllabusPages.syllabus');
 });
 
-
-Route::get('/dashboard', function () {
-    return view('syllabusPages.dashboard');
-});
-
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/login', [LoginController::class, 'showLoginForm']);
 // routes/web.php
@@ -55,4 +53,4 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/generate-syllabus', [GenerateController::class, 'generateSyllabus'])->name('generate-syllabus');
 
 Route::get('/login/google', [LoginController::class, 'redirectToGoogle']);
-Route::get('/api/login/google/callback', [LoginController::class, 'handleGoogleCallback']);
+Route::get('/login/google/callback', [LoginController::class, 'handleGoogleCallback']);

@@ -28,6 +28,7 @@ class Kernel extends HttpKernel
 protected $routeMiddleware = [
     // ...
     'auth.user' => \App\Http\Middleware\AuthenticateUser::class,
+    'auth.check' => \App\Http\Middleware\AuthCheck::class,
 ];
 
 
@@ -73,4 +74,6 @@ protected $routeMiddleware = [
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
+
+
 }
