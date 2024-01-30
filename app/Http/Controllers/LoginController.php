@@ -80,118 +80,52 @@ class LoginController extends Controller
 
     public function redirectToGoogle()
     {
-        // URL untuk melakukan redirect ke Google untuk otentikasi
-        $googleAuthUrl = "https://be.brainys.oasys.id/api/login/google";
-
-        // Lakukan redirect
-        return redirect()->away($googleAuthUrl);
+        // Mengarahkan pengguna langsung ke URL pilihan akun Google
+        return redirect('https://be.brainys.oasys.id/api/login/google/');
     }
 
     public function handleGoogleCallback(Request $request)
     {
-        // Dapatkan semua parameter dari URL
-        $allParameters = $request->all();
+        try {
+            // Mendapatkan informasi pengguna dari respons Google
+            $response = json_decode($request->getContent(), true);
 
-        // Inisialisasi objek GuzzleHttp\Client
-        $client = new Client();
+            // Pastikan respons memiliki informasi yang diperlukan
+            if (isset($response['id'], $response['email'], $response['token'])) {
+                // Cari atau buat pengguna baru berdasarkan email dari Google
+                $existingUser = User::where('email', $response['email'])->first();
 
-        // Tentukan URL callback dengan menyertakan semua parameter
-        $callbackUrl = 'https://be.brainys.oasys.id/api/login/google/callback?' . http_build_query($allParameters);
+                if ($existingUser) {
+                    // Jika pengguna sudah ada, login pengguna
+                    Auth::login($existingUser);
+                } else {
+                    // Jika pengguna belum ada, buat pengguna baru
+                    $newUser = new User();
+                    $newUser->name = $response['name'] ?? null;
+                    $newUser->email = $response['email'];
+                    // Atur properti lain yang ingin Anda ambil dari respons Google
+                    $newUser->save();
 
-        // Lakukan permintaan GET ke endpoint callback
-        $response = $client->get($callbackUrl);
+                    // Login pengguna baru
+                    Auth::login($newUser);
+                }
 
-        // Ambil dan manipulasi data JSON dari respons
-        // $data = json_decode($response->getBody(), true);
-
-        $result = json_decode($response->getBody(), true);
-
-        // dd($result);
-
-        if ($result['token']) {
-            // Menyimpan token di dalam session jika diperlukan
-            session()->put('token.access_token', $result['token']);
-            // Menyimpan data pengguna di dalam session
-            session()->put('user_data', $result);
-
-            // Mengembalikan hasil dan menyertakan data ke view
-            return view('syllabusPages.dashboard', compact('result'));
-        } else {
-            // Jika status bukan success, menangani kasus lain atau menampilkan pesan kesalahan dari server
-            $errorMessage = isset($result['message']) ? $result['message'] : 'Login failed. Please check your credentials.';
-
-            // Menggunakan withErrors untuk menyimpan pesan kesalahan dalam sesi
-            return redirect()->route('login')->withErrors(['error' => $errorMessage]);
-        }
-    }
-}
-<<<<<<< HEAD
-
-public function logout()
-{
-
-    // Lakukan tindakan logout yang diperlukan, misalnya membersihkan sesi
-    session()->forget('token.access_token');
-
-    // Redirect ke halaman login setelah logout
-    return redirect()->route('login');
-}
-
-public function redirectToGoogle()
-{
-    // Mengarahkan pengguna langsung ke URL pilihan akun Google
-    return redirect('https://be.brainys.oasys.id/api/login/google/');
-}
-
-public function handleGoogleCallback(Request $request)
-{
-    try {
-        // Mendapatkan informasi pengguna dari respons Google
-        $response = json_decode($request->getContent(), true);
-
-        // Pastikan respons memiliki informasi yang diperlukan
-        if (isset($response['id'], $response['email'], $response['token'])) {
-            // Cari atau buat pengguna baru berdasarkan email dari Google
-            $existingUser = User::where('email', $response['email'])->first();
-
-            if ($existingUser) {
-                // Jika pengguna sudah ada, login pengguna
-                Auth::login($existingUser);
-            } else {
-                // Jika pengguna belum ada, buat pengguna baru
-                $newUser = new User();
-                $newUser->name = $response['name'] ?? null;
-                $newUser->email = $response['email'];
-                // Atur properti lain yang ingin Anda ambil dari respons Google
-                $newUser->save();
-
-                // Login pengguna baru
-                Auth::login($newUser);
+                // Redirect pengguna ke halaman dashboard setelah login berhasil
+                return redirect()->route('dashboard');
             }
-
-            // Redirect pengguna ke halaman dashboard setelah login berhasil
-            return redirect()->route('dashboard');
+        } catch (\Exception $e) {
+            return redirect('/login')->with('error', 'Terjadi kesalahan saat login menggunakan Google.');
         }
-    } catch (\Exception $e) {
-        return redirect('/login')->with('error', 'Terjadi kesalahan saat login menggunakan Google.');
+
+        return redirect('/login')->with('error', 'Data respons tidak valid.');
     }
 
-    return redirect('/login')->with('error', 'Data respons tidak valid.');
+    public function showDashboard()
+    {
+        // Mendapatkan data pengguna yang telah login
+        $userData = Auth::user();
+
+        // Tampilkan data di halaman dashboard
+        return view('dashboard', compact('userData'));
+    }
 }
-
-public function showDashboard()
-{
-    // Mendapatkan data pengguna yang telah login
-    $userData = Auth::user();
-
-    // Tampilkan data di halaman dashboard
-    return view('dashboard', compact('userData'));
-}
-
-
-}
-
-
-
-=======
->>>>>>> ebe4c9ff06919cb44eef431a02cea9dc82dd7566
