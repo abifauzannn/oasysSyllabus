@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\GenerateController;
-
+use Illuminate\Auth\Events\Login;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,4 +54,5 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::post('/generate-syllabus', [GenerateController::class, 'generateSyllabus'])->name('generate-syllabus');
 
-
+Route::get('/login/google', [LoginController::class, 'redirectToGoogle']);
+Route::get('/api/login/google/callback', [LoginController::class, 'handleGoogleCallback']);

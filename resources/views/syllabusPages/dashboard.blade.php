@@ -35,24 +35,35 @@
         $userData = session('user_data');
     @endphp
 
-    <div class="container mx-auto px-10 py-9">
-        <div class="w-full h-[134px]">
-            <div class="bg-gray-900 py-4 px-4 md:py-7 md:px-[51px] gap-3 rounded-2xl mb-[37px]">
+    <div class="container mx-auto px-[20px] sm:px-10 py-9">
+        <div class="w-full h-[134px] mb-[32px]">
+            <div class="bg-gray-900 py-4 px-4 md:py-7 md:px-[51px] gap-3 rounded-2xl">
                 <div class=" text-white text-2xl md:text-[32px] font-bold font-['Inter'] leading-[49.99px]">Selamat
                     datang</div>
                 <div class=" text-white text-xs font-normal font-['Inter'] leading-tight">Oasys syllabus
                     merupakan aplikasi AI Text Generation untuk kebutuhan administrasi dan akademik</div>
             </div>
+        </div>
+
+        <div class="flex-col">
             <a href="/syllabus">
                 <div
-                    class="w-full md:w-[303px]  p-4 rounded-lg shadow border border-gray-300 flex-col justify-start items-start gap-2 inline-flex">
+                    class="w-full md:w-[303px]  p-4 rounded-lg shadow border border-gray-300 flex-col justify-start items-start gap-2 inline-flex mr-6 mb-2">
                     <img src="{{ URL('images/book-open.svg') }}" alt="" class="w-6 h-6 relative">
                     <div class=" text-gray-900 text-lg font-bold font-['Inter'] leading-normal">Templat Silabus</div>
                     <div class=" text-black text-xs font-normal font-['Inter'] leading-normal">Gunakan template silabus
                         untuk sekolah</div>
                 </div>
             </a>
-
+            <a href="/syllabus">
+                <div
+                    class="w-full md:w-[303px]  p-4 rounded-lg shadow border border-gray-300 flex-col justify-start items-start gap-2 inline-flex">
+                    <img src="{{ URL('images/document-text.png') }}" alt="" class="w-6 h-6 relative">
+                    <div class=" text-gray-900 text-lg font-bold font-['Inter'] leading-normal">Templat Silabus</div>
+                    <div class=" text-black text-xs font-normal font-['Inter'] leading-normal">Gunakan template silabus
+                        untuk sekolah</div>
+                </div>
+            </a>
         </div>
     </div>
 
