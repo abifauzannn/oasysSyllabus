@@ -91,7 +91,7 @@
             <button type="submit"
                 class="w-full h-12 inline-flex gap-[92px] pt-3 pb-[11px] bg-white rounded-[50px] shadow border border-neutral-200 mb-8">
                 <img src="{{ URL('images/google.svg') }}" alt="" class="w-[18px] h-[18px] ml-6">
-                <div class="text-black text-opacity-50 text-base font-medium font-['Roboto']">Sign in with Google</div>
+                <a href="{{url('/login/google')}}" class="text-black text-opacity-50 text-base font-medium font-['Roboto']">Sign in with Google</a>
             </button>
 
             <div class="h-6 justify-center items-center gap-2 inline-flex">

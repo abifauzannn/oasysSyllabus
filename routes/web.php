@@ -53,4 +53,8 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/generate-syllabus', [GenerateController::class, 'generateSyllabus'])->name('generate-syllabus');
 
 Route::get('/login/google', [LoginController::class, 'redirectToGoogle']);
+<<<<<<< HEAD
 Route::get('/login/google/callback', [LoginController::class, 'handleGoogleCallback']);
+=======
+Route::get('/login/google-forwarder', [LoginController::class, 'handleGoogleCallback']);
+>>>>>>> ebe4c9ff06919cb44eef431a02cea9dc82dd7566

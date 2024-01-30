@@ -3,21 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Laravel\Socialite\Facades\Socialite;
 
 class GoogleLoginController extends Controller
 {
+    public function redirectToGoogle()
+    {
+        // URL untuk melakukan redirect ke Google untuk otentikasi
+        $googleAuthUrl = "https://be.brainys.oasys.id/api/login/google";
 
-public function redirectToGoogle()
-{
-    return Socialite::driver('google')->redirect();
-}
+        // Lakukan redirect
+        return redirect()->away($googleAuthUrl);
+    }
 
-public function handleGoogleCallback()
-{
-    $user = Socialite::driver('google')->user();
-    // Lakukan sesuatu dengan informasi user
-}
-
+    // Metode ini akan dipanggil oleh Google setelah pengguna berhasil melakukan otentikasi
+    public function handleGoogleCallback(Request $request)
+    {
+        // Tangani callback dari Google setelah otentikasi berhasil
+        // $code = $request->input('code');
+        // Lakukan yang diperlukan dengan kode yang diterima dari Google
+    }
 }
